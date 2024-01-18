@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Student Management System</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">Pay My Buddy</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/depot}">Transfert</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Home</a>
+
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class ="container">
+    <div class = "row">
+        <h1> List Transaction </h1>
+    </div>
+
+        <h1> List Transfert </h1>
+    </div>
+    <div class = "row">
+        <div class = "col-lg-3">
+            <a th:href = "@{/depot/new}" class = "btn btn-primary btn-sm mb-3"> Add Transaction</a>
+        </div>
+    </div>
+    <table class = "table table-striped table-bordered">
+        <thead class = "table-dark">
+        <tr>
+            <th> description</th>
+            <th> Connection</th>
+            <th> montant</th>
+            <th> Date </th>
+            <th> Actions </th>
+        </tr>
+        </thead>
+       <!-- <tbody>
+        <tr th:each = "transaction: ${transactions}">
+            <td th:text = "${transaction.description}"></td>
+            <td th:number = ${transaction.montant}></td>
+            <td  type="date "></td>
+            <td></td>
+        </tr>
+        </tbody>-->
+    </table>
+
+</div>
+</body>
+</html>
