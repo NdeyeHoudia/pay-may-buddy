@@ -4,38 +4,61 @@ import com.openclassrooms.paymaybuddy.model.Transaction;
 import com.openclassrooms.paymaybuddy.model.User;
 import com.openclassrooms.paymaybuddy.repository.CompteRepository;
 import com.openclassrooms.paymaybuddy.service.TransfertDetailsImpl;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/trans")
+@Controller
+//@RequestMapping("/api/trans")
 public class TransactionController {
    @Autowired
     private TransfertDetailsImpl transfertDetails;
    @Autowired
    public CompteRepository compteRepository;
 
-    @GetMapping("/depot")
+   @GetMapping("/transactions/new")
     public String depot(@RequestParam double montant, int idCompte, Model model){
-       model.addAttribute("transactions", montant);
+        // recuperer d'abord l'user (idUser)
+
+       model.addAttribute("trans", montant);
        Optional<Compte> compteOptional =  compteRepository.findById(idCompte);
         transfertDetails.depot(montant, compteOptional.get());
         return "transactions";
     }
 
+   @GetMapping("/load_form_transaction/new")
+   public String depot(@RequestParam double montant, int idCompte, Model model, HttpSession session){
+       // recuperer d'abord l'user (idUser)
+
+       session.setAttribute("msg", "depot Added Sucessfully..");
+
+       model.addAttribute("transactions", montant);
+       Optional<Compte> compteOptional =  compteRepository.findById(idCompte);
+       transfertDetails.depot(montant, compteOptional.get());
+       return "debit";
+   }
+    @GetMapping("/save_transaction")
+    public String saveProducts(Model model) {
+        model.addAttribute("transactions", transfertDetails.getTransaction());
+        //transactionRepository.save(transaction);
+        return "redirect:/load_form_transaction";
+    }
+    @GetMapping("/load_form_transaction")
+    public String loadForm() {
+        return "add";
+    }
+
     @GetMapping("/retrait")
     public String retrait(@RequestParam double montant, int idCompte,Model model){
-        model.addAttribute("transactions", montant);
+        model.addAttribute("trans", montant);
         Optional<Compte> compteOptional =  compteRepository.findById(idCompte);
         transfertDetails.retrait(montant, compteOptional.get());
-        return "transactions";
+        return "debit";
     }
     @GetMapping("/transfert")
     public String transfert(
@@ -49,7 +72,7 @@ public class TransactionController {
            transfertDetails.transfer(compteEmetteur.get(),compteRecepteur.get(),montant,description);
        }
        else throw  new RuntimeException("Un des compte n'a pas été trouvé");
-     return "le transfert est effectué";
+     return "transactions";
     }
 
     @GetMapping("/AllTransaction")
@@ -58,4 +81,10 @@ public class TransactionController {
         compte.getClient();
        return transfertDetails.getTransaction();
     }
+    @PostMapping("/transactions")
+    public String addTransfert (@ModelAttribute("addTransaction") Model model, Transaction transaction) {
+        model.addAttribute("addTransaction", transfertDetails.saveTransfert(transaction));
+        return "redirect:/transactions";
+    }
+
 }

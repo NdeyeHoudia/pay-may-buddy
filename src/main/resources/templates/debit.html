@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-  <meta charset="ISO-8859-1">
+  <meta charset="ISO-8859-1" />
   <title>Student Management System</title>
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -62,7 +63,7 @@
     <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
       <h1 class = "text-center"> Credit </h1>
       <div class = "card-body">
-        <form th:action="@{/transactions}" th:object = "${transaction}" method="POST">
+        <form th:action="@{/transactions/new}" th:object = "${transaction}" method="POST">
           <div class ="form-group">
             <label> Montant</label>
             <input

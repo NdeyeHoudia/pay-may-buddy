@@ -4,7 +4,6 @@ import com.openclassrooms.paymaybuddy.model.Transaction;
 
 public interface ITransfert {
     public void transfer(Compte compteEmetteur, Compte compteRecepteur, double montant, String description);
-
     Transaction saveTransfert(Transaction transaction);
 
     public Transaction getTransactionById(Long id);

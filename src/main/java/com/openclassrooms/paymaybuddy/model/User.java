@@ -2,8 +2,11 @@ package com.openclassrooms.paymaybuddy.model;
 
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @Entity
@@ -13,7 +16,7 @@ import java.util.List;
 				@UniqueConstraint(columnNames = "email")
 		})
 //@ToString(exclude = {"parent"})
-//@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"id"})
 public class User {
 	
 	@Id
@@ -21,7 +24,7 @@ public class User {
 	@Column(name = "id")
 	private Long id;
 	@Column(name = "username")
-	private String username;
+	private String name;
 	@Column(name = "email")
 	private String email;
 	@Column(name = "password")
@@ -38,30 +41,27 @@ public class User {
 	public void setListFriends(List<User> listFriends) {
 		this.listFriends = listFriends;
 	}
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(
-			name = "users_roles",
-			joinColumns = @JoinColumn(
-		            name = "user_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(
-				            name = "role_id", referencedColumnName = "id"))
 
-	private Collection<Role> roles;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(  name = "users_roles",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Collection<Role> roles = new HashSet<>();
 	public User() {}
-	public User(String username, String email, String password, Collection<Role> roles) {
+	public User(String username, String email, String password) {
 		super();
-		this.username = username;
+		this.name = username;
 		this.email = email;
 		this.password = password;
-		this.roles = roles;
+		//this.roles = roles;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getName() {
+		return name;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEmail() {

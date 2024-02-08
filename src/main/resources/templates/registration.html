@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="utf-8" />
 <title>Registration</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -31,7 +32,6 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-
 				<!-- success message -->
 				<div th:if="${param.success}">
 					<div class="alert alert-info">You've successfully registered
@@ -39,22 +39,25 @@
 				</div>
 				<h1>Add connection</h1>
 
-				<form th:action="@{/}" method="get" th:object="${registration}">
+				<form th:action="@{/index}" method="get" th:object="${listFriend}">
+					<span th:text="${name}"></span>
+
 					<select name="pets" id="pet-select">
 						<option value="">---Please choose a connection---</option>
-						<option th:each = "registrations: ${registration}">
-							<span th:text = "${registrations.email}"></span>
+						<option th:each = "friend: ${listFriend}">
+							<span th:text = "${friend.email}"></span>
 						</option>
 					</select>
 					<br>
 					<br>
-				<!--<form th:action="@{/}" method="post" th:object="${addConnection}">-->
+					<!--<form th:action="@{/}" method="post" th:object="${addConnection}"></form>-->
 
-				<div class="form-group">
+					<div class="form-group">
 						<button type="submit" class="btn btn-success" >Add</button>
-						<span>Already registered? <a href="/" th:href="@{/login}">Login here</a></span>
+						<!--<span>Already registered? <a href="/index" th:href="@{/login}">Login here</a></span>-->
 					</div>
 				</form>
+			</div>
 			</div>
 		</div>
 	</div>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 @Service
 @Transactional
@@ -58,7 +59,7 @@ public class TransfertDetailsImpl implements ITransfert {
     public Transaction getTransactionById(Long id) {
         return transactionRepository.findById(Math.toIntExact(id)).get();
     }
-    public Iterable<Transaction> getTransaction(){
+    public List<Transaction> getTransaction(){
         return transactionRepository.findAll();
     }
     public Optional<Transaction> getTransactionById(Integer id){
