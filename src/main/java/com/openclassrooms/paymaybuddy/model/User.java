@@ -28,7 +28,6 @@ public class User {
 	private String email;
 	@Column(name = "password")
 	private String password;
-
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "friend", referencedColumnName = "id")
 	private User friend;

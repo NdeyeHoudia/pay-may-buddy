@@ -27,25 +27,24 @@
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Profile</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}" >Profile</a></li>
 
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/registration}">Contact</a></li>
 
-					<li sec:authorize="isAuthenticated()"><a href="load_form_transaction">Transactions</a></li>
+					<li sec:authorize="isAuthenticated()"><a href="load_form_transaction">Transfer</a></li>
 
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
-
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log off</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<br>
 	<br>
-	<nav>
-		<div>
+	<nav >
+		<div style="background-color:#DCDCDC;">
 			<ul class="nav navbar-nav">
 				<li sec:authorize="isAuthenticated()"><a th:href="@{/index}">Home</a></li>
-				<li sec:authorize="isAuthenticated()"><a href="load_form_transaction">Transfert</a></li>				</li>
+				<li sec:authorize="isAuthenticated()"><a href="load_form_transaction">Transfer</a></li>				</li>
 
 				</li>
 			</ul>
@@ -55,15 +54,11 @@
 	<br>
 	<div class ="container">
 		<h3>Send Money</h3>
-				<div th:if="${session.msg}">
-					<h5 class="text-center text-success" th:text="${session.msg}"></h5>
-					<th:block th:text="${#session.removeAttribute('msg')}"></th:block>
-				</div>
 				<form th:action="@{/addTransaction}"  method="post" th:object="${transactionDTO}" >
 					<fieldset>
 						<legend></legend>
 						<div>
-							<a th:href = "@{/registration}" class = "btn btn-primary btn-sm mb-3"> Add connexion</a>
+							<a th:href = "@{/registration}" class="btn btn-primary btn-sm mb-3"> Add connexion</a>
 						</div>
 						<br>
 						<select th:field="*{username}" name="pets" id="pet-select" required="required">
@@ -73,19 +68,18 @@
 							</option>
 						</select>
 						<input th:field="*{description}" id="description" type="text" name="description" placeholder="Enter description"/>
-						<input th:field="*{montant}" type="number" name = "montant" required="required"/>
-						<button type="submit" class="btn btn-primary">Pay</button>
-						<!--<input type="submit" class="btn btn-primary" value="pay">-->
+						<input th:field="*{montant}" value="0£" type="number" name = "montant" required="required"/>
+						<button type="submit" class="btn btn-success" > Pay </button>
 					</fieldset>
 					<div class = "row">
 						<h3> My transactions </h3>
 					</div>
 					<table class = "table table-striped table-bordered">
-						<thead class = "table-dark">
-						<tr>
+						<thead class = "table-dark" style="background-color: #008000;">
+						<tr style="color:#FFFFFF">
 							<th> Connection</th>
-							<th> description</th>
-							<th> montant</th>
+							<th> Description</th>
+							<th> Montant</th>
 							<th> Date </th>
 						</tr>
 						</thead>

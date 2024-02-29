@@ -1,6 +1,4 @@
 package com.openclassrooms.paymaybuddy.model;
-
-
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -17,15 +15,12 @@ public class Transaction {
     private  double montant;
     @Column(name = "date_transaction")
     private LocalDateTime date;
-
     @ManyToOne
     @JoinColumn(name = "compte_source_id")
     private Compte compteSource;
-
     @ManyToOne
     @JoinColumn(name = "compte_destination_id")
     private Compte compteDestination;
-
 
     public Compte getCompteSource() {
         return compteSource;

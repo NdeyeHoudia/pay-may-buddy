@@ -15,15 +15,13 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">Pay My Buddy</a>
+        <a class="navbar-brand" style="text-align:center" th:href="@{/}">Pay My Buddy</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                 <!--   <a class="nav-link active" aria-current="page" th:href="@{/register}">Register</a>-->
-                </li>
+                <li class="nav-item"></li>
             </ul>
         </div>
     </div>
@@ -42,7 +40,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="text-center">My Pay Buddy</h2>
+                    <h2 class="btn btn-success btn-sm mb-3 ">My Pay Buddy</h2>
                 </div>
                 <div class="card-body">
                     <form
@@ -52,9 +50,9 @@
                             class="form-horizontal"
                     >
                         <div class="form-group mb-3">
-                            <label class="control-label"> Username</label>
+                            <label class="control-label"> Email</label>
                             <input
-                                    type="text"
+                                    type="email"
                                     id="username"
                                     name="username"
                                     class="form-control"
@@ -73,10 +71,7 @@
                             />
                         </div>
                         <div class="form-group mb-3">
-                            <button type="submit" class="btn btn-primary" >Submit</button>
-                            <!--<span> Not registered ?
-                                <a th:href="@{/register}">Register/Signup here</a>
-                            </span>-->
+                            <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                     </form>
                 </div>

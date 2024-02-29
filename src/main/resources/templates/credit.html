@@ -34,6 +34,10 @@
   <div class = "row">
     <div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
       <h1 class = "text-center"> Credit </h1>
+      <div th:if="${session.msg}">
+        <h5 class="text-center text-success" th:text="${session.msg}"></h5>
+        <th:block th:text="${#session.removeAttribute('msg')}"></th:block>
+      </div>
       <div class = "card-body">
         <form th:action="@{/load_form_transaction/retrait}" method="get">
           <div class ="form-group">
