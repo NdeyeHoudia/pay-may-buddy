@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
+ <head>
 <meta charset="utf-8" />
 <title>Registration</title>
 <link rel="stylesheet"
@@ -25,7 +25,6 @@
 			</div>
 		</div>
 	</nav>
-
 <br>
 <br>
 	<!-- Create HTML registration form -->
@@ -38,23 +37,14 @@
 						to our awesome app!</div>
 				</div>
 				<h1>Add connection</h1>
-
-				<form th:action="@{/index}" method="get" th:object="${listFriend}">
-					<span th:text="${name}"></span>
-
-					<select name="pets" id="pet-select">
-						<option value="">---Please choose a connection---</option>
-						<option th:each = "friend: ${listFriend}">
-							<span th:text = "${friend.email}"></span>
-						</option>
-					</select>
+				<form th:action="@{/showAllUsers}" method="post" th:object="${listFriend}">
+					<input type="email" name="email" id="email" required="required" />
 					<br>
 					<br>
-					<!--<form th:action="@{/}" method="post" th:object="${addConnection}"></form>-->
-
 					<div class="form-group">
-						<button type="submit" class="btn btn-success" >Add</button>
-						<!--<span>Already registered? <a href="/index" th:href="@{/login}">Login here</a></span>-->
+						<button type="submit" class="btn btn-success" >
+							Add
+						</button>
 					</div>
 				</form>
 			</div>

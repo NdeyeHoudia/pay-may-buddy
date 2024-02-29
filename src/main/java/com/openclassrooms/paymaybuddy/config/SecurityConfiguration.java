@@ -24,7 +24,6 @@ public class SecurityConfiguration {
     public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
@@ -34,14 +33,16 @@ public class SecurityConfiguration {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/trans/**").permitAll()
                                 .requestMatchers("/index").permitAll()
                                 .requestMatchers("/load_form_transaction/**").permitAll()
-                                .requestMatchers("/load_form_transaction/new/**").permitAll()
-                                .requestMatchers("/transactions/**").permitAll()
                                 .requestMatchers("/showAllUsers/**").permitAll()
                                 .requestMatchers("/addConnection/**").permitAll()
-                                .requestMatchers("/retrait/**").permitAll()
-
+                                .requestMatchers("/debit").permitAll()
+                                .requestMatchers("/credit").permitAll()
+                                .requestMatchers("/addAllConnection/**").permitAll()
+                                .requestMatchers("/registration/**").permitAll()
+                                .requestMatchers("/addTransaction/**").permitAll()
                 ).formLogin(
                         form -> form
                                 .loginPage("/")
@@ -55,116 +56,10 @@ public class SecurityConfiguration {
                 );
         return http.build();
     }
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+            .userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder());
     }
-
-   /* @Autowired
-    private UserServiceImpl service;
-
-    @Autowired
-    private DataSource dataSource;
-
-    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(service).passwordEncoder(passwordEncoder());
-    }
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
-        authProvider.setUserDetailsService(service);
-        authProvider.setPasswordEncoder(passwordEncoder());
-
-        return authProvider;
-    }
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-
-                //   .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                {
-                    try {
-                        auth.requestMatchers("/**").permitAll()
-                                .requestMatchers("/api/auth").permitAll()
-                                .requestMatchers("/api/test/**").permitAll()
-                                .requestMatchers(" /api/trans/**").permitAll()
-                                .requestMatchers("/login/").permitAll()
-                                .anyRequest().authenticated();
-
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-
-        http.authenticationProvider(authenticationProvider());
-
-        return http.build();
-    }
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-        db.setDataSource(dataSource);
-        return db;
-    }
-
-
-
-
-
-
-
-
-	/*@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-		auth.setUserDetailsService(userService);
-		auth.setPasswordEncoder(passwordEncoder());
-		return auth;
-	}
-*/
-
-
-	/*protected void configure(HttpSecurity http) throws Exception {
-		/*http.csrf().disable();
-		http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-		http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-*/
-	/*	http.authorizeRequests().antMatchers(
-						"/**",
-						"/js/**",
-						"/css/**",
-						"/img/**").permitAll()
-				.anyRequest().authenticated()
-				.and()
-				.formLogin()
-				.loginPage("/login")
-				.permitAll()
-				.and()
-				.logout()
-				.invalidateHttpSession(true)
-				.clearAuthentication(true)
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/login?logout")
-				.permitAll();
-		// Configurer Remember Me.
-		/*http.authorizeRequests().and()
-				.rememberMe().tokenRepository(this.persistentTokenRepository())
-				.tokenValiditySeconds(1 * 24 * 60 * 60); // 24h*/
-	//}
-
-
 }

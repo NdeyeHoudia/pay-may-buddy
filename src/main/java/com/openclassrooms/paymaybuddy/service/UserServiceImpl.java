@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,24 +20,16 @@ public class UserServiceImpl implements UserDetailsService {
     @Autowired
     private  UserRepository userRepository;
 
-
 	public UserServiceImpl(UserRepository userRepository) {
 		super();
 		this.userRepository = userRepository;
 	}
-	public User findByUserName(String username) {
-		return userRepository.findByEmail(username).orElseThrow();
-	}
-
-	public List<User> getAllUsers(){return  userRepository.findAll();}
-
-
-	public String addConnexion(User user, User friend) {
+	public User  addConnexion(User user, User friend) {
 		if (user!=null){
 			user.addConnexion(friend);
 			userRepository.save(user);
 		}
-		return user.getEmail();
+		return user;
 	}
 
 	/*@Override
@@ -63,9 +53,4 @@ public class UserServiceImpl implements UserDetailsService {
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
 	}
-	public Optional<User> listFriends(Long id){
-
-		return 	userRepository.findById(id);
-	}
-
 }

@@ -3,7 +3,6 @@ package com.openclassrooms.paymaybuddy.model;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -25,15 +24,15 @@ public class User {
 	private Long id;
 	@Column(name = "username")
 	private String name;
-	@Column(name = "email")
+	@Column(nullable = false, unique = true,name = "email")
 	private String email;
 	@Column(name = "password")
 	private String password;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "parent", referencedColumnName = "id")
-	private User parent;
-	@OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "friend", referencedColumnName = "id")
+	private User friend;
+	@OneToMany(mappedBy = "friend", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<User> listFriends;
 	public List<User> getListFriends() {
 		return listFriends;
@@ -91,9 +90,18 @@ public class User {
 		this.id = id;
 	}
 
-	public void addConnexion(User user){
+	public User getFriend() {
+		return friend;
+	}
+
+	public void setFriend(User friend) {
+		this.friend = friend;
+	}
+
+	public User addConnexion(User user){
 		if (user !=null){
 			listFriends.add(user);
 		}
+		return user;
 	}
 }
