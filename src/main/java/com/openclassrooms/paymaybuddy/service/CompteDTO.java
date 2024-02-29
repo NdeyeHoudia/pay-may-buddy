@@ -6,6 +6,6 @@ import java.time.LocalDateTime;
 @Data
 public class CompteDTO {
     String username;
-    Double montant;
+    Double solde;
     LocalDateTime date;
 }

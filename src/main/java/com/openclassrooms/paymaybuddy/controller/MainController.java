@@ -86,10 +86,10 @@ public class MainController {
 				User addUserWithEmail = currentUser.addConnexion(friend);
 				String addConnection = addUserWithEmail.getEmail();
 				listFriend.add(addUserWithEmail.addConnexion(currentUser));
-				userRepository.save(addUserWithEmail);
-				User addConnection1 = userService.addConnexion(currentUser, friend);
+			//	userRepository.save(addUserWithEmail);
+			//	User addConnection1 = userService.addConnexion(currentUser, friend);
 				System.out.println("New friend  " +addConnection);
-				model.addAttribute("addUserWithEmail", addUserWithEmail);
+				model.addAttribute("addConnection", addConnection);
 			//}
 			//else throw  new RuntimeException("L'utilisateur existe deja dans la liste des amis");
 

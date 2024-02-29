@@ -52,18 +52,18 @@
             <table class = "table table-striped table-bordered">
                 <thead class = "table-dark">
                 <tr>
-                    <th> Connection</th>
-                    <th> montant</th>
-                    <th> Date </th>
+                    <th> client</th>
+                    <th> Numero Compte Bancaire</th>
+                    <th> Montant</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:each = "t:${transactionDTOS}">
-                    <td th:text = "${t.username}"></td>
-                    <td th:text = "${t.description}"></td>
-                    <td th:text = "${t.montant}"></td>
-                    <td th:text = "${t.date}"></td>
-                </tr>
+                    <tr th:each = "c:${currentAccount}">
+                        <td th:text = "${c.client.getName()}"></td>
+                        <td th:text = "${c.numberAccountBank}"></td>
+                        <td th:text = "${c.solde}"></td>
+
+                    </tr>
                 </tbody>
             </table>
     </form>

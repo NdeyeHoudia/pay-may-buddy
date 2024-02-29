@@ -2,13 +2,16 @@ package com.openclassrooms.paymaybuddy.controller;
 import com.openclassrooms.paymaybuddy.model.Compte;
 import com.openclassrooms.paymaybuddy.model.Transaction;
 import com.openclassrooms.paymaybuddy.model.User;
+import com.openclassrooms.paymaybuddy.payload.response.MessageResponse;
 import com.openclassrooms.paymaybuddy.repository.CompteRepository;
 import com.openclassrooms.paymaybuddy.repository.TransactionRepository;
 import com.openclassrooms.paymaybuddy.repository.UserRepository;
 import com.openclassrooms.paymaybuddy.service.TransactionDTO;
 import com.openclassrooms.paymaybuddy.service.TransfertDetailsImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,14 +30,16 @@ public class TransactionController {
    @Autowired
    private UserRepository userRepository;
     @GetMapping("/load_form_transaction/depot")
-    public String depot(@RequestParam(value = "montant",required = false) Double montant,Model model,HttpServletRequest request){
-        // session.setAttribute("msg", "depot Added Sucessfully..");
+    public String depot(@RequestParam(value = "montant",required = false) Double montant, Model model, HttpServletRequest request, HttpSession session){
        String name =request.getUserPrincipal().getName();
        Long idUser = userRepository.findByEmail(name).get().getId();
-       model.addAttribute("transactions", idUser);
+
+        model.addAttribute("transactions", idUser);
        Optional<Compte> compteOptional =  compteRepository.findById(Math.toIntExact(idUser));
        transfertDetails.depot(montant, compteOptional.get());
-       return "redirect:/load_form_transaction";
+        session.setAttribute("msg", "depot Added Sucessfully..");
+
+        return "redirect:/load_form_transaction";
    }
     @GetMapping("/debit")
     public String depotMoney(){ return "debit";}
@@ -64,10 +69,10 @@ public class TransactionController {
     public String showAllTransactions(Model model, HttpServletRequest request) {
         String name =request.getUserPrincipal().getName();
         User user = userRepository.findByEmail(name).get();
-        Compte compte = compteRepository.findByClient(user);
-        List<TransactionDTO> transactionDTOS = transfertDetails.getTransaction(compte);
+        Compte currentAccount = compteRepository.findByClient(user);
+       // List<TransactionDTO> transactionDTOS = transfertDetails.getTransaction(compte);
 
-        model.addAttribute("transactionDTOS", transactionDTOS);
+        model.addAttribute("currentAccount", currentAccount);
         return "add";
     }
     @GetMapping("/transfert")
@@ -92,5 +97,15 @@ public class TransactionController {
     public String addTransfert (@ModelAttribute("addTransaction") Model model, Transaction transaction) {
         model.addAttribute("addTransaction", transfertDetails.saveTransfert(transaction));
         return "redirect:/transactions";
+    }
+    @PostMapping("/compte")
+    public String showCompte(User user, Model model,HttpServletRequest request){
+        String name =request.getUserPrincipal().getName();
+
+        User user1 = userRepository.findByEmail(name).get();
+        Compte compte = compteRepository.findByClient(user1);
+        model.addAttribute("compte", compte);
+
+        return "add";
     }
 }
