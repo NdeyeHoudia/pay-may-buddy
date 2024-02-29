@@ -32,15 +32,6 @@ public class UserServiceImpl implements UserDetailsService {
 		return user;
 	}
 
-	/*@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-		User user = userRepository.findByUsername(username);
-		if(user == null) {
-			throw new UsernameNotFoundException("Invalid email or password.");
-		}
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
-	}*/
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

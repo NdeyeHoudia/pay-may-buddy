@@ -32,7 +32,6 @@ public class TransactionController {
         model.addAttribute("transactions", idUser);
        Optional<Compte> compteOptional =  compteRepository.findById(Math.toIntExact(idUser));
        transfertDetails.depot(montant, compteOptional.get());
-       //session.setAttribute("msg", "depot Added Sucessfully..");
         return "redirect:/load_form_transaction";
    }
     @GetMapping("/debit")
@@ -56,7 +55,7 @@ public class TransactionController {
         return "redirect:/load_form_transaction";
     }
     @GetMapping("/load_form_transaction")
-    public String showAllTransactions(Model model, HttpServletRequest request) {
+    public String showAccount(Model model, HttpServletRequest request) {
         String name =request.getUserPrincipal().getName();
         User user = userRepository.findByEmail(name).get();
         Compte currentAccount = compteRepository.findByClient(user);
@@ -65,7 +64,6 @@ public class TransactionController {
     }
     @GetMapping("/transfer")
     public String transfer(
-            @RequestParam  int idCompteEmetteur,
             @RequestParam int idCompteRecepteur,
             @RequestParam double montant,
             @RequestParam String description,Model model,HttpServletRequest request) {

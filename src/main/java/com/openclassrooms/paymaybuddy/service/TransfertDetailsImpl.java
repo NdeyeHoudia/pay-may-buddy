@@ -51,7 +51,7 @@ public class TransfertDetailsImpl implements ITransfert {
           TransactionDTO transactionDTO = new TransactionDTO();
           transactionDTO.setUsername(transaction.getCompteSource().getClient().getName());
           transactionDTO.setDescription(transaction.getDescription());
-          transactionDTO.setMontant(transaction.getMontant());
+          transactionDTO.setMontant(transaction.getMontant() -transaction.getMontant()*0.05);
           transactionDTO.setDate(transaction.getDate());
           transactionDTOS.add(transactionDTO);
 
@@ -61,7 +61,7 @@ public class TransfertDetailsImpl implements ITransfert {
             TransactionDTO transactionDTO = new TransactionDTO();
             transactionDTO.setUsername(transaction.getCompteDestination().getClient().getName());
             transactionDTO.setDescription(transaction.getDescription());
-            transactionDTO.setMontant(transaction.getMontant());
+            transactionDTO.setMontant(transaction.getMontant() -transaction.getMontant()*0.05);
             transactionDTO.setDate(transaction.getDate());
             transactionDTOS.add(transactionDTO);
         });

@@ -78,8 +78,6 @@ public class MainController {
 			User addUserWithEmail = currentUser.addConnexion(friend);
 			String addConnection = addUserWithEmail.getEmail();
 			listFriend.add(addUserWithEmail.addConnexion(currentUser));
-		//	userRepository.save(addUserWithEmail);
-		//	User addConnection1 = userService.addConnexion(currentUser, friend);
 			System.out.println("New friend  " +addConnection);
 			model.addAttribute("addConnection", addConnection);
 
