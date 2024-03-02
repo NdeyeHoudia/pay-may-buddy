@@ -11,10 +11,7 @@ Le diagramme de classe UML et le schéma de modélisation de la base de données
 
 
 Ce projet  application de transfert d'argent est fait avec springBoot, JPA, Thymeleaf et MySQL.
-SpringBoot
-JPA
-Thymeleaf
-Mysql
+
 
 Fontionnalités de base
 Incription
